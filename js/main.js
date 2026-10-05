@@ -90,12 +90,14 @@ document.addEventListener("DOMContentLoaded", function () {
             status.classList.add("success");
             form.reset();
           } else {
-            status.textContent = "Something went wrong. Please try again, or email neal@bardswell.com directly.";
+            console.error("Web3Forms response:", data);
+            status.textContent = "Message not sent: " + (data.message || "unknown error") + ". Please try again, or email neal@bardswell.com directly.";
             status.classList.add("error");
           }
         })
-        .catch(function () {
-          status.textContent = "Something went wrong. Please try again, or email neal@bardswell.com directly.";
+        .catch(function (err) {
+          console.error("Contact form error:", err);
+          status.textContent = "Could not reach the form service (" + (err && err.message ? err.message : "network error") + "). Please try again, or email neal@bardswell.com directly.";
           status.classList.add("error");
         })
         .finally(function () {
